@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  db:
+    image: mongo:4.2.3
+    container_name: db
+    restart: always
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - 27017:27017
+    depends_on:
+      - mongo-express
+  
+  backend:
+    build: ./server
+    container_name: backend
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
