@@ -1,6 +1,6 @@
 FROM node:latest AS builder
 
-WORKDIR /app
+WORKDIR /server
 
 COPY package*.json ./
 RUN npm ci
@@ -11,11 +11,11 @@ COPY src src
 
 FROM node:14-alpine
 
-WORKDIR /app
+WORKDIR /server
 RUN apk add --no-cache tini
 
 COPY package*.json ./
 RUN npm ci
 
-COPY --from=builder /app/src src/
+COPY --from=builder /server/src src/
 CMD [ "/sbin/tini", "--", "node", "src/index.js"]
