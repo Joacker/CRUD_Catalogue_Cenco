@@ -1,10 +1,11 @@
 const express = require('express');
-const { use } = require('./routes/index.routes');
+const morgan = require('morgan');
 
 const app = express()
 
 require('./configs/database');
 
+app.use(morgan('dev'));
 app.use(require('./routes/index.routes'));
 
 app.listen(3000);
