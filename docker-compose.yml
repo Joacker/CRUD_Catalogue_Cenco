@@ -6,9 +6,11 @@ services:
     container_name: db
     restart: always
     volumes:
-      - ./db:/db
+      - ./db:/data/db
     ports:
       - 27016:27017
+    logging:
+      driver: none
   
   backend:
     build: ./server
