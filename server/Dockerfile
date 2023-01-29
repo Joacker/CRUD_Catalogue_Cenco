@@ -1,21 +1,13 @@
-FROM node:latest AS builder
+FROM node:15-alpine3.13
 
-WORKDIR /server
+COPY . /app
 
-COPY package*.json ./
-RUN npm ci
+WORKDIR /app
 
-COPY src src
+COPY . .
 
-#RUN npm run build
+RUN npm install
 
-FROM node:14-alpine
+EXPOSE 3000
 
-WORKDIR /server
-RUN apk add --no-cache tini
-
-COPY package*.json ./
-RUN npm ci
-
-COPY --from=builder /server/src src/
-CMD [ "/sbin/tini", "--", "node", "src/index.js"]
+CMD ["npm", "start"]
