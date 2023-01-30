@@ -16,8 +16,10 @@ services:
     build: ./server
     container_name: backend
     restart: always
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     ports:
-      - 3001:3000
+      - "3001:3000"
     volumes:
       - ./server/src:/app/src
     depends_on:
