@@ -1,11 +1,10 @@
-FROM node:18-alpine3.15
-
-WORKDIR /app
-
-COPY . .
-
+FROM node:19-alpine AS build
+WORKDIR /usr/src/app
+COPY package.json package-lock.json ./
 RUN npm install
+COPY . .
+RUN npm run build
 
-EXPOSE 3000
-
-CMD ["npm","start"]
+FROM nginx:1.23.2-alpine
+COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /usr/src/app/dist/frontend /usr/share/nginx/html
