@@ -24,3 +24,5 @@ services:
       - ./server/src:/app/src
     depends_on:
        - db
+
+  
