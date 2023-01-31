@@ -33,5 +33,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
     ports:
       - "80:80"
+    volumes:
+      - ./frontend/src:/app/src
     depends_on:
       - backend
